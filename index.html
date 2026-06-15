@@ -173,70 +173,94 @@
       gap:24px;
       margin-top:20px;
     }
-    .gallery-item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 12px;
-      height: 320px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      cursor: pointer;
-      transition: opacity 0.4s ease, transform 0.4s ease;
-    }
-    .gallery-item.hide {
-      display: none;
-    }
-    .gallery-item.show {
-      animation: fadeIn 0.5s ease forwards;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    .gallery-item img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-    .project-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0) 100%);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 30px;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-    .project-overlay h3 {
-      color: #fff;
-      font-size: 1.3rem;
-      transform: translateY(20px);
-      transition: transform 0.4s ease;
-      margin-bottom: 5px;
-    }
-    .project-overlay p {
-      color: #d9b98c;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transform: translateY(20px);
-      transition: transform 0.4s ease 0.1s;
-    }
-    .gallery-item:hover img {
-      transform: scale(1.08);
-    }
-    .gallery-item:hover .project-overlay {
-      opacity: 1;
-    }
-    .gallery-item:hover .project-overlay h3,
-    .gallery-item:hover .project-overlay p {
-      transform: translateY(0);
-    }
+   /* Ensure gallery grid images are crisp and structured */
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  height: 380px; /* Enhanced height for better architectural visibility */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  cursor: pointer;
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Keeps image proportions clean */
+  transition: transform 0.4s ease;
+}
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+/* FULL-SCREEN LIGHTBOX MODAL VIEWER */
+.lightbox-modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 9999; /* Sits on top of your fixed navigation bar */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(17, 17, 17, 0.95); /* Deep dark background */
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.lightbox-content {
+  max-width: 85%;
+  max-height: 80vh;
+  object-fit: contain; /* Shows the absolute full image without clipping */
+  border-radius: 4px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  animation: zoomIn 0.3s ease;
+}
+@keyframes zoomIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Lightbox Navigation & Interface Controllers */
+.lightbox-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  color: #fff;
+  font-size: 40px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.lightbox-close:hover { color: #d9b98c; }
+
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 35px;
+  background: rgba(0,0,0,0.4);
+  padding: 15px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.3s;
+}
+.lightbox-arrow:hover { background: #d9b98c; color: #111; }
+.arrow-left { left: 40px; }
+.arrow-right { right: 40px; }
+
+.lightbox-caption {
+  color: #fff;
+  margin-top: 15px;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+.lightbox-counter {
+  color: #d9b98c;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  text-transform: uppercase;
+}
 
     /* Founders Section Styling */
     .founders{
@@ -510,57 +534,128 @@
       <button class="filter-btn" data-filter="eco">Eco Retreat</button>
     </div>
 
-    <div class="gallery">
-      
-      <div class="gallery-item" data-project="villa">
-        <img src="Image (3).jpg" alt="Featured Architecture 1">
-        <div class="project-overlay">
-          <h3>Modern Luxury Villa</h3>
-          <p>Architecture &amp; Interiors</p>
-        </div>
-      </div>
+   <div class="gallery">
+  
+  <!-- ====== TYPE 1: MODERN LUXURY VILLA (5 IMAGES) ====== -->
+  <div class="gallery-item" data-category="villa" data-caption="Modern Luxury Villa - Front Elevation">
+    <img src="Image (3).jpg" alt="Luxury Villa Main">
+    <div class="project-overlay"><h3>Modern Luxury Villa</h3><p>Architecture &amp; Interiors</p></div>
+  </div>
+  <div class="gallery-item" data-category="villa" data-caption="Modern Luxury Villa - Living Lounge" style="display:none;">
+    <img src="villa_2.jpg" alt="Villa Lounge">
+  </div>
+  <div class="gallery-item" data-category="villa" data-caption="Modern Luxury Villa - Master Suite" style="display:none;">
+    <img src="villa_3.jpg" alt="Villa Bed">
+  </div>
+  <div class="gallery-item" data-category="villa" data-caption="Modern Luxury Villa - Deck Area" style="display:none;">
+    <img src="villa_4.jpg" alt="Villa Deck">
+  </div>
+  <div class="gallery-item" data-category="villa" data-caption="Modern Luxury Villa - Night View" style="display:none;">
+    <img src="villa_5.jpg" alt="Villa Exterior">
+  </div>
 
-      <div class="gallery-item" data-project="minimal">
-        <img src="Image (4).jpg" alt="Featured Architecture 2">
-        <div class="project-overlay">
-          <h3>Minimalist Residence</h3>
-          <p>Residential Concept</p>
-        </div>
-      </div>
+  <!-- ====== TYPE 2: MINIMALIST RESIDENCE (5 IMAGES) ====== -->
+  <div class="gallery-item" data-category="minimal" data-caption="Minimalist Residence - Living Space">
+    <img src="Image (4).jpg" alt="Minimalist Residence Main">
+    <div class="project-overlay"><h3>Minimalist Residence</h3><p>Residential Concept</p></div>
+  </div>
+  <div class="gallery-item" data-category="minimal" data-caption="Minimalist Residence - Kitchen Layout" style="display:none;">
+    <img src="minimal_2.jpg" alt="Minimal Kitchen">
+  </div>
+  <div class="gallery-item" data-category="minimal" data-caption="Minimalist Residence - Foyer View" style="display:none;">
+    <img src="minimal_3.jpg" alt="Minimal Foyer">
+  </div>
+  <div class="gallery-item" data-category="minimal" data-caption="Minimalist Residence - Courtyard" style="display:none;">
+    <img src="minimal_4.jpg" alt="Minimal Court">
+  </div>
+  <div class="gallery-item" data-category="minimal" data-caption="Minimalist Residence - Elevation Studio" style="display:none;">
+    <img src="minimal_5.jpg" alt="Minimal Elevation">
+  </div>
 
-      <div class="gallery-item" data-project="office">
-        <img src="Image (5).jpg" alt="Featured Architecture 3">
-        <div class="project-overlay">
-          <h3>Contemporary Office</h3>
-          <p>Commercial Design</p>
-        </div>
-      </div>
+  <!-- ====== TYPE 3: CONTEMPORARY OFFICE (5 IMAGES) ====== -->
+  <div class="gallery-item" data-category="office" data-caption="Contemporary Office - Main Conference Hall">
+    <img src="Image (5).jpg" alt="Contemporary Office Main">
+    <div class="project-overlay"><h3>Contemporary Office</h3><p>Commercial Design</p></div>
+  </div>
+  <div class="gallery-item" data-category="office" data-caption="Contemporary Office - Reception Desk" style="display:none;">
+    <img src="office_2.jpg" alt="Office Reception">
+  </div>
+  <div class="gallery-item" data-category="office" data-caption="Contemporary Office - Workstation Bay" style="display:none;">
+    <img src="office_3.jpg" alt="Office Bay">
+  </div>
+  <div class="gallery-item" data-category="office" data-caption="Contemporary Office - Executive Suite" style="display:none;">
+    <img src="office_4.jpg" alt="Office Executive">
+  </div>
+  <div class="gallery-item" data-category="office" data-caption="Contemporary Office - Cafeteria Space" style="display:none;">
+    <img src="office_5.jpg" alt="Office Cafe">
+  </div>
 
-      <div class="gallery-item" data-project="penthouse">
-        <img src="Image (6).jpg" alt="Featured Architecture 4">
-        <div class="project-overlay">
-          <h3>Urban Penthouse</h3>
-          <p>Luxury Interior</p>
-        </div>
-      </div>
+  <!-- ====== TYPE 4: URBAN PENTHOUSE (5 IMAGES) ====== -->
+  <div class="gallery-item" data-category="penthouse" data-caption="Urban Penthouse - Sky Lounge Skylight">
+    <img src="Image (6).jpg" alt="Urban Penthouse Main">
+    <div class="project-overlay"><h3>Urban Penthouse</h3><p>Luxury Interior</p></div>
+  </div>
+  <div class="gallery-item" data-category="penthouse" data-caption="Urban Penthouse - Dining Enclave" style="display:none;">
+    <img src="penthouse_2.jpg" alt="Penthouse Dining">
+  </div>
+  <div class="gallery-item" data-category="penthouse" data-caption="Urban Penthouse - Walk-in Wardrobe" style="display:none;">
+    <img src="penthouse_3.jpg" alt="Penthouse Wardrobe">
+  </div>
+  <div class="gallery-item" data-category="penthouse" data-caption="Urban Penthouse - Rooftop Deck" style="display:none;">
+    <img src="penthouse_4.jpg" alt="Penthouse Roof">
+  </div>
+  <div class="gallery-item" data-category="penthouse" data-caption="Urban Penthouse - Bathroom Suite" style="display:none;">
+    <img src="penthouse_5.jpg" alt="Penthouse Bath">
+  </div>
 
-      <div class="gallery-item" data-project="retail">
-        <img src="Image (7).jpg" alt="Featured Architecture 5">
-        <div class="project-overlay">
-          <h3>Bespoke Retail Space</h3>
-          <p>Turnkey Project</p>
-        </div>
-      </div>
+  <!-- ====== TYPE 5: BESPOKE RETAIL SPACE (5 IMAGES) ====== -->
+  <div class="gallery-item" data-category="retail" data-caption="Bespoke Retail Space - Showroom Floor">
+    <img src="Image (7).jpg" alt="Bespoke Retail Space Main">
+    <div class="project-overlay"><h3>Bespoke Retail Space</h3><p>Turnkey Project</p></div>
+  </div>
+  <div class="gallery-item" data-category="retail" data-caption="Bespoke Retail Space - Display Wall" style="display:none;">
+    <img src="retail_2.jpg" alt="Retail Display">
+  </div>
+  <div class="gallery-item" data-category="retail" data-caption="Bespoke Retail Space - Trial Enclosure" style="display:none;">
+    <img src="retail_3.jpg" alt="Retail Lounge">
+  </div>
+  <div class="gallery-item" data-category="retail" data-caption="Bespoke Retail Space - Window Facade" style="display:none;">
+    <img src="retail_4.jpg" alt="Retail Facade">
+  </div>
+  <div class="gallery-item" data-category="retail" data-caption="Bespoke Retail Space - Checkout Lounge" style="display:none;">
+    <img src="retail_5.jpg" alt="Retail Counter">
+  </div>
 
-      <div class="gallery-item" data-project="eco">
-        <img src="Image (8).jpg" alt="Featured Architecture 6">
-        <div class="project-overlay">
-          <h3>Eco-Friendly Retreat</h3>
-          <p>Architectural Work</p>
-        </div>
-      </div>
+  <!-- ====== TYPE 6: ECO-FRIENDLY RETREAT (5 IMAGES) ====== -->
+  <div class="gallery-item" data-category="eco" data-caption="Eco-Friendly Retreat - Courtyard Canopy">
+    <img src="Image (8).jpg" alt="Eco-Friendly Retreat Main">
+    <div class="project-overlay"><h3>Eco-Friendly Retreat</h3><p>Architectural Work</p></div>
+  </div>
+  <div class="gallery-item" data-category="eco" data-caption="Eco-Friendly Retreat - Vernacular Verandah" style="display:none;">
+    <img src="eco_2.jpg" alt="Eco Verandah">
+  </div>
+  <div class="gallery-item" data-category="eco" data-caption="Eco-Friendly Retreat - Earth Brick Lounge" style="display:none;">
+    <img src="eco_3.jpg" alt="Eco Lounge">
+  </div>
+  <div class="gallery-item" data-category="eco" data-caption="Eco-Friendly Retreat - Solar Meadow Plan" style="display:none;">
+    <img src="eco_4.jpg" alt="Eco Solar">
+  </div>
+  <div class="gallery-item" data-category="eco" data-caption="Eco-Friendly Retreat - Natural Stream Gazebo" style="display:none;">
+    <img src="eco_5.jpg" alt="Eco Gazebo">
+  </div>
 
-    </div>
+</div>
+
+<!-- Insert this clean HTML layout structural Modal panel right beneath the gallery div block -->
+<div id="studioLightbox" class="lightbox-modal">
+  <span class="lightbox-close">&times;</span>
+  <div class="lightbox-arrow arrow-left"><i class="fa-solid fa-chevron-left"></i></div>
+  <img class="lightbox-content" id="lightboxImg" src="" alt="Full Scale Viewer">
+  <div class="lightbox-arrow arrow-right"><i class="fa-solid fa-chevron-right"></i></div>
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
   </section>
   <section class="founders">
     <h2 class="section-title">Founders</h2>
@@ -652,42 +747,63 @@
 
   <!-- GALLERY ISOLATION FILTER SCRIPT ENGINE -->
   <script>
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const galleryItems = document.querySelectorAll('.gallery-item');
+   // FULL-SCREEN IMAGE GRID LIGHTBOX LOGIC
+const lightbox = document.getElementById('studioLightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxCaption = document.getElementById('lightboxCaption');
+const lightboxCounter = document.getElementById('lightboxCounter');
+const closeBtn = document.querySelector('.lightbox-close');
+const leftArrow = document.querySelector('.arrow-left');
+const rightArrow = document.querySelector('.arrow-right');
 
-    function filterGallery(targetFilter) {
-      filterButtons.forEach(btn => {
-        if(btn.getAttribute('data-filter') === targetFilter) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
-      });
+let activeGalleryImages = [];
+let currentImgIndex = 0;
 
-      galleryItems.forEach(item => {
-        const projectType = item.getAttribute('data-project');
-        if (targetFilter === 'all' || projectType === targetFilter) {
-          item.classList.remove('hide');
-          item.classList.add('show');
-        } else {
-          item.classList.remove('show');
-          item.classList.add('hide');
-        }
-      });
-    }
+// Connect dynamic click monitoring to every individual image card
+document.querySelectorAll('.gallery-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const selectedCategory = item.getAttribute('data-category');
+    
+    // Group all 5 images matching this specific design category sequence
+    activeGalleryImages = Array.from(document.querySelectorAll(`.gallery-item[data-category="${selectedCategory}"]`));
+    
+    // Find where the user clicked inside this sub-group sequence array
+    currentImgIndex = activeGalleryImages.indexOf(item);
+    
+    launchLightboxViewer();
+  });
+});
 
-    filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        filterGallery(button.getAttribute('data-filter'));
-      });
-    });
+function launchLightboxViewer() {
+  const currentItem = activeGalleryImages[currentImgIndex];
+  const itemImageSrc = currentItem.querySelector('img').src;
+  const itemCaptionText = currentItem.getAttribute('data-caption') || "Studio Astra Project Portfolio";
+  
+  // Feed parameters to interface layout nodes
+  lightboxImg.src = itemImageSrc;
+  lightboxCaption.textContent = itemCaptionText;
+  lightboxCounter.textContent = `Project Image ${currentImgIndex + 1} of ${activeGalleryImages.length}`;
+  
+  lightbox.style.display = 'flex';
+}
 
-    galleryItems.forEach(item => {
-      item.addEventListener('click', () => {
-        const associatedProject = item.getAttribute('data-project');
-        filterGallery(associatedProject);
-      });
-    });
+// Swipe Controller Handlers
+function showNextImage() {
+  currentImgIndex = (currentImgIndex + 1) % activeGalleryImages.length; // Loops back to 1 seamlessly
+  launchLightboxViewer();
+}
+
+function showPrevImage() {
+  currentImgIndex = (currentImgIndex - 1 + activeGalleryImages.length) % activeGalleryImages.length; // Loops backwards cleanly
+  launchLightboxViewer();
+}
+
+rightArrow.addEventListener('click', (e) => { e.stopPropagation(); showNextImage(); });
+leftArrow.addEventListener('click', (e) => { e.stopPropagation(); showPrevImage(); });
+closeBtn.addEventListener('click', () => lightbox.style.display = 'none');
+lightbox.addEventListener('click', () => lightbox.style.display = 'none');
+lightboxImg.addEventListener('click', (e) => e.stopPropagation()); // Prevents window from shutting when clicking image center
+
   </script>
 </body>
 </html>
