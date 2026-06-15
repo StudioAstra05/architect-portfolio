@@ -422,6 +422,89 @@
   fill: #d9b98c !important; /* Forces your studio gold accent on mouseover */
   transform: translateY(-3px); /* Smooth slight upward movement animation */
 }
+/* VIDEO SECTION STYLES */
+.video-section {
+  background: #111; /* Dark premium cinematic backdrop */
+  color: #fff;
+}
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+.video-card {
+  background: #1d1d1d;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* Perfect 16:9 widescreen ratio */
+}
+.video-wrapper video,
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.video-info {
+  padding: 25px;
+}
+.video-info h3 {
+  color: #d9b98c;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+.video-info p {
+  color: #aaa;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* HIGH-IMPRESSION CLIENT STATS COUNTER GRID */
+.stats-section {
+  background: #fdfcfb;
+  text-align: center;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+.stat-card {
+  padding: 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+  border-top: 4px solid #d9b98c;
+}
+.stat-number {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 5px;
+}
+.stat-label {
+  color: #666;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+@media(max-width: 768px) {
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
   </style>
 </head>
@@ -436,6 +519,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#walkthroughs">Walkthroughs</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -625,6 +709,69 @@
 </div>
 
   </section>
+  <!-- NEW VIDEO WALKTHROUGHS SECTION -->
+<section class="video-section" id="walkthroughs">
+  <h2 class="section-title" style="color: #fff;">Site Walkthroughs &amp; Reels</h2>
+  <p style="color: #aaa;">Experience the raw details, premium materials, and execution tracking live from our site locations.</p>
+  
+  <div class="video-grid">
+    
+    <!-- Video Box 1: Local MP4 File Setup -->
+    <div class="video-card">
+      <div class="video-wrapper">
+        <!-- Replace 'villa-tour.mp4' with your actual recorded video file name -->
+        <video controls preload="metadata" poster="hero.png">
+          <source src="villa-tour1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="video-info">
+        <h3>Luxury Villa Site Execution</h3>
+        <p>A full layout reveal showing structural completion, bespoke concrete detailing, and raw spacing engineering in Bangalore.</p>
+      </div>
+    </div>
+
+    <!-- Video Box 2: YouTube / Instagram Embedded Link Option -->
+    <div class="video-card">
+      <div class="video-wrapper">
+        <!-- Simply replace this placeholder iframe embed code with your YouTube or Vimeo link if needed -->
+        <iframe src="https://www.instagram.com/reel/DZemuPzTHwu/?igsh=NWV6dzc3M3R6bnU1" allowfullscreen></iframe>
+      </div>
+      <div class="video-info">
+        <h3>Bespoke Interior Turnkey Handover</h3>
+        <p>A cinematic tour exploring premium wood textures, hidden lighting lines, and modular custom storage integration.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- NEW STUDIO ASSETS CREDIBILITY COUNT SECTION -->
+<section class="stats-section">
+  <h2 class="section-title">Studio Astra By The Numbers</h2>
+  <p style="color: #666;">Our track record across residential and commercial developments in Bangalore.</p>
+  
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number" data-target="50">0</div>
+      <div class="stat-label">Projects Delivered</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" data-target="15">0</div>
+      <div class="stat-label">Ongoing Sites</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" data-target="100">0</div>
+      <div class="stat-label">% Design Fidelity</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" data-target="5">0</div>
+      <div class="stat-label">Years Excellence</div>
+    </div>
+  </div>
+</section>
+
   <section class="founders">
     <h2 class="section-title">Founders</h2>
     <div class="founder-grid">
@@ -846,6 +993,46 @@ document.addEventListener("DOMContentLoaded", function () {
       if (e.key === 'ArrowRight') showNextImage();
       if (e.key === 'ArrowLeft') showPrevImage();
       if (e.key === 'Escape') lightbox.style.display = 'none';
+    }
+  });
+});
+
+    //3. ANIMATED INCREMENTING NUMBERS SCRIPT ENGINE
+document.addEventListener("DOMContentLoaded", function () {
+  const statNumbers = document.querySelectorAll('.stat-number');
+  
+  const animateCounters = () => {
+    statNumbers.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const current = +counter.textContent;
+      
+      // Speed adjustments
+      const increment = target / 30; 
+      
+      if (current < target) {
+        counter.textContent = Math.ceil(current + increment);
+        setTimeout(animateCounters, 40);
+      } else {
+        // Append special markers to numbers manually once hit
+        if (target === 100) counter.textContent = "100%";
+        else if (target === 50 || target === 15) counter.textContent = target + "+";
+        else counter.textContent = target;
+      }
+    });
+  };
+
+  // Run the counting trigger seamlessly when the user views the numbers section
+  let animatedTriggered = false;
+  window.addEventListener('scroll', () => {
+    const statsSection = document.querySelector('.stats-grid');
+    if (!statsSection) return;
+    
+    const position = statsSection.getBoundingClientRect().top;
+    const screenHeight = window.innerHeight;
+    
+    if (position < screenHeight && !animatedTriggered) {
+      animateCounters();
+      animatedTriggered = true;
     }
   });
 });
