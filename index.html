@@ -167,6 +167,14 @@
       color: #111;
       border-color: #d9b98c;
     }
+    /* Master visibility controls for filtering actions */
+.gallery-item {
+  display: none; /* Controlled dynamically by JS setup */
+}
+/* Show default elements on initial site load execution */
+.gallery-item.visible-thumb {
+  display: block;
+}
     .gallery{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
