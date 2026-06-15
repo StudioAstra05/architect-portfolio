@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Studio Astra Architects</title>
+  
+  <!-- Font Awesome for clean vectors, social icons, and contact indicators -->
+  <link rel="stylesheet" href="https://cloudflare.com" />
+  
   <style>
     *{
       margin:0;
@@ -136,15 +140,38 @@
       color:#222;
     }
 
-    /* Interactive Projects Gallery with Overlays */
+    /* Dynamic Gallery Layout Filters */
     .projects{
       background:#f9f9f9;
+    }
+    .gallery-filters {
+      display: flex;
+      gap: 15px;
+      margin: 25px 0;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: 0.3s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: #d9b98c;
+      color: #111;
+      border-color: #d9b98c;
     }
     .gallery{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
       gap:24px;
-      margin-top:40px;
+      margin-top:20px;
     }
     .gallery-item {
       position: relative;
@@ -153,6 +180,18 @@
       height: 320px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.05);
       cursor: pointer;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    /* Simple utility classes for dynamic script filtering */
+    .gallery-item.hide {
+      display: none;
+    }
+    .gallery-item.show {
+      animation: fadeIn 0.5s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
     .gallery-item img{
       width:100%;
@@ -200,7 +239,7 @@
       transform: translateY(0);
     }
 
-    /* Founders Section with Social Icons */
+    /* Founders Section with Vector Icons */
     .founders{
       background:white;
     }
@@ -236,20 +275,17 @@
     .founder-socials {
       margin-top: auto;
       display: flex;
-      gap: 15px;
+      gap: 20px;
     }
     .founder-socials a {
       text-decoration: none;
       color: #222;
-      font-size: 0.85rem;
-      font-weight: bold;
-      border-bottom: 2px solid transparent;
-      padding-bottom: 2px;
-      transition: 0.3s;
+      font-size: 1.5rem;
+      transition: color 0.3s ease, transform 0.3s ease;
     }
     .founder-socials a:hover {
       color: #d9b98c;
-      border-color: #d9b98c;
+      transform: translateY(-3px);
     }
 
     /* Why Choose Us Section */
@@ -289,18 +325,91 @@
       line-height: 1.6;
     }
 
+    /* Contact Block Grid Form Styles */
     .contact{
       background:#1d1d1d;
       color:white;
-      text-align:center;
     }
-    .contact p{
-      margin-top:10px;
-      color:#ddd;
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 50px;
+      text-align: left;
+      margin-top: 40px;
     }
-    .contact a{
-      color:#d9b98c;
-      text-decoration:none;
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .contact-info p {
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+    }
+    .contact-info p i {
+      font-size: 1.3rem;
+      width: 30px;
+    }
+    .contact-info a {
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .contact-info a:hover {
+      color: #d9b98c;
+    }
+    .contact-form {
+      background: rgba(255,255,255,0.05);
+      padding: 40px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #d9b98c;
+      margin-bottom: 8px;
+    }
+    .form-group input, 
+    .form-group select, 
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      color: #fff;
+      border-radius: 6px;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.3s;
+    }
+    .form-group input:focus, 
+    .form-group select:focus, 
+    .form-group textarea:focus {
+      border-color: #d9b98c;
+    }
+    .submit-btn {
+      background: #d9b98c;
+      color: #111;
+      padding: 14px 30px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: 0.3s;
+      width: 100%;
+    }
+    .submit-btn:hover {
+      background: #fff;
     }
     footer{
       background:#111;
@@ -309,7 +418,7 @@
       padding:20px;
       font-size:14px;
     }
-    @media(max-width:768px){
+    @media(max-width:900px){
       nav{
         flex-direction:column;
         gap:15px;
@@ -318,13 +427,12 @@
       nav ul {
         gap: 20px;
       }
-      .founder-grid{
+      .founder-grid, .contact-container{
         grid-template-columns:1fr;
+        gap: 40px;
       }
     }
-  </style>
-</head>
-<body>
+    <body>
 
   <nav>
     <div class="nav-brand">
@@ -386,11 +494,25 @@
     </div>
   </section>
 
+  <!-- INTERACTIVE GALLERY PROJECTS FILTER SYSTEM -->
   <section class="projects" id="projects">
     <h2 class="section-title">Featured Projects</h2>
+    <p style="color:#666;">Click any project below or use the filter buttons to explore related spaces.</p>
+    
+    <!-- Hidden helper filters controlled on click -->
+    <div class="gallery-filters">
+      <button class="filter-btn active" data-filter="all">All Works</button>
+      <button class="filter-btn" data-filter="villa">Luxury Villa</button>
+      <button class="filter-btn" data-filter="minimal">Minimal Residence</button>
+      <button class="filter-btn" data-filter="office">Commercial Office</button>
+      <button class="filter-btn" data-filter="penthouse">Urban Penthouse</button>
+      <button class="filter-btn" data-filter="retail">Retail Space</button>
+      <button class="filter-btn" data-filter="eco">Eco Retreat</button>
+    </div>
+
     <div class="gallery">
       
-      <div class="gallery-item">
+      <div class="gallery-item" data-project="villa">
         <img src="Image (3).jpg" alt="Featured Architecture 1">
         <div class="project-overlay">
           <h3>Modern Luxury Villa</h3>
@@ -398,7 +520,7 @@
         </div>
       </div>
 
-      <div class="gallery-item">
+      <div class="gallery-item" data-project="minimal">
         <img src="Image (4).jpg" alt="Featured Architecture 2">
         <div class="project-overlay">
           <h3>Minimalist Residence</h3>
@@ -406,7 +528,7 @@
         </div>
       </div>
 
-      <div class="gallery-item">
+      <div class="gallery-item" data-project="office">
         <img src="Image (5).jpg" alt="Featured Architecture 3">
         <div class="project-overlay">
           <h3>Contemporary Office</h3>
@@ -414,7 +536,7 @@
         </div>
       </div>
 
-      <div class="gallery-item">
+      <div class="gallery-item" data-project="penthouse">
         <img src="Image (6).jpg" alt="Featured Architecture 4">
         <div class="project-overlay">
           <h3>Urban Penthouse</h3>
@@ -422,7 +544,7 @@
         </div>
       </div>
 
-      <div class="gallery-item">
+      <div class="gallery-item" data-project="retail">
         <img src="Image (7).jpg" alt="Featured Architecture 5">
         <div class="project-overlay">
           <h3>Bespoke Retail Space</h3>
@@ -430,7 +552,7 @@
         </div>
       </div>
 
-      <div class="gallery-item">
+      <div class="gallery-item" data-project="eco">
         <img src="Image (8).jpg" alt="Featured Architecture 6">
         <div class="project-overlay">
           <h3>Eco-Friendly Retreat</h3>
@@ -449,7 +571,8 @@
         <p class="founder-title">Co-Founder &amp; Principal Architect</p>
         <p>Brings a strategic vision to Studio Astra, aligning architectural precision with modern lifestyle design. He focuses on pushing creative boundaries to turn client concepts into breathtaking realities.</p>
         <div class="founder-socials">
-          <a href="https://www.instagram.com/studioastra_architects?igsh=MXN0bXdnY3QwNmJuMw==" target="_blank">Instagram</a>
+          <a href="" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
       </div>
       <div class="founder-card">
@@ -457,7 +580,8 @@
         <p class="founder-title">Co-Founder &amp; Architect</p>
         <p>Specializes in the execution of complex design structures and high-end interiors. He ensures that structural layout, material selection, and premium craftsmanship harmoniously intersect on every project site.</p>
         <div class="founder-socials">
-          <a href="https://www.instagram.com/studioastra_architects?igsh=MXN0bXdnY3QwNmJuMw==" target="_blank">Instagram</a>
+          <a href="" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
       </div>
     </div>
@@ -484,23 +608,59 @@
     </div>
   </section>
 
+  <!-- SPLIT CONTACT GRID CONTAINER -->
   <section class="contact" id="contact">
-    <h2 class="section-title">Get In Touch</h2>
-    <p>Studio Astra Architects</p>
-    <p>Bagalgunte, Bangalore – 560057</p>
-    <p>
-      Phone: 
-      <a href="tel:9071150712">9071150712</a> / 
-      <a href="tel:9148051403">9148051403</a>
-    </p>
-    <p>
-      Email: 
-      <a href="mailto:studioastraarchitects@gmail.com">studioastraarchitects@gmail.com</a>
-    </p>
+    <h2 class="section-title" style="color:#fff;">Get In Touch</h2>
+    
+    <div class="contact-container">
+      <div class="contact-info">
+        <h3 style="color:#d9b98c; margin-bottom:20px; font-size:1.6rem;">Studio Astra Architects</h3>
+        <p><i class="fa-solid fa-location-dot" style="color:#d9b98c;"></i> Bagalgunte, Bangalore – 560057</p>
+        <p><i class="fa-solid fa-phone" style="color:#d9b98c;"></i> <a href="tel:9071150712">9071150712</a>&nbsp;/&nbsp;<a href="tel:9148051403">9148051403</a></p>
+        <p><i class="fa-solid fa-envelope" style="color:#d9b98c;"></i> <a href="mailto:studioastraarchitects@gmail.com">studioastraarchitects@gmail.com</a></p>
+      </div>
+
+      <form class="contact-form" action="#" method="POST">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" required placeholder="Arjun Kumar">
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" required placeholder="name@domain.com">
+        </div>
+        <div class="form-group">
+          <label for="service">Required Service</label>
+          <select id="service">
+            <option value="architecture">Architectural Works</option>
+            <option value="interior">Interior Design</option>
+            <option value="construction">Construction Management</option>
+            <option value="turnkey">Turnkey Projects</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Project Details</label>
+          <textarea id="message" rows="4" required placeholder="Tell us about your plot size, timeline, or spacing expectations..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </div>
   </section>
 
   <footer>
     © 2026 Studio Astra Architects. All Rights Reserved.
   </footer>
-</body>
-</html>
+
+  <!-- GALLERY ISOLATION FILTER SCRIPT ENGINE -->
+  <script>
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    // Function to handle filtering logic
+    function filterGallery(targetFilter) {
+      // Toggle button highlights
+      filterButtons.forEach(btn => {
+        if(btn.getAttribute('data-filter') === targetFilter) {
+btn.classList.add('active');} else {btn.classList.remove('active');}});// Filter grid image cardsgalleryItems.forEach(item => {const projectType = item.getAttribute('data-project');if (targetFilter === 'all' || projectType === targetFilter) {item.classList.remove('hide');item.classList.add('show');} else {item.classList.remove('show');item.classList.add('hide');}});}// Trigger filter when a filter button is clickedfilterButtons.forEach(button => {button.addEventListener('click', () => {filterGallery(button.getAttribute('data-filter'));});});// Trigger filter when an image card itself is clickedgalleryItems.forEach(item => {item.addEventListener('click', () => {const associatedProject = item.getAttribute('data-project');filterGallery(associatedProject);});});
+  </style>
+</head>
