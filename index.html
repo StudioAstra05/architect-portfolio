@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Studio Astra Architects</title>
   
-  <!-- Font Awesome for clean vectors, social icons, and contact indicators -->
+  <!-- Font Awesome Vector Asset Icons CDN Link -->
   <link rel="stylesheet" href="https://cloudflare.com" />
   
   <style>
@@ -182,7 +182,6 @@
       cursor: pointer;
       transition: opacity 0.4s ease, transform 0.4s ease;
     }
-    /* Simple utility classes for dynamic script filtering */
     .gallery-item.hide {
       display: none;
     }
@@ -239,7 +238,7 @@
       transform: translateY(0);
     }
 
-    /* Founders Section with Vector Icons */
+    /* Founders Section Styling */
     .founders{
       background:white;
     }
@@ -288,7 +287,7 @@
       transform: translateY(-3px);
     }
 
-    /* Why Choose Us Section */
+    /* Why Choose Us Section Styling */
     .why-choose-us {
       background: #fdfcfb;
     }
@@ -432,7 +431,9 @@
         gap: 40px;
       }
     }
-    <body>
+  </style>
+</head>
+<body>
 
   <nav>
     <div class="nav-brand">
@@ -497,9 +498,8 @@
   <!-- INTERACTIVE GALLERY PROJECTS FILTER SYSTEM -->
   <section class="projects" id="projects">
     <h2 class="section-title">Featured Projects</h2>
-    <p style="color:#666;">Click any project below or use the filter buttons to explore related spaces.</p>
+    <p style="color:#666; margin-bottom: 20px;">Click any project below or use the filter buttons to explore related spaces.</p>
     
-    <!-- Hidden helper filters controlled on click -->
     <div class="gallery-filters">
       <button class="filter-btn active" data-filter="all">All Works</button>
       <button class="filter-btn" data-filter="villa">Luxury Villa</button>
@@ -562,7 +562,6 @@
 
     </div>
   </section>
-
   <section class="founders">
     <h2 class="section-title">Founders</h2>
     <div class="founder-grid">
@@ -571,7 +570,7 @@
         <p class="founder-title">Co-Founder &amp; Principal Architect</p>
         <p>Brings a strategic vision to Studio Astra, aligning architectural precision with modern lifestyle design. He focuses on pushing creative boundaries to turn client concepts into breathtaking realities.</p>
         <div class="founder-socials">
-          <a href="" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
           <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
       </div>
@@ -580,7 +579,7 @@
         <p class="founder-title">Co-Founder &amp; Architect</p>
         <p>Specializes in the execution of complex design structures and high-end interiors. He ensures that structural layout, material selection, and premium craftsmanship harmoniously intersect on every project site.</p>
         <div class="founder-socials">
-          <a href="" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
           <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
       </div>
@@ -656,11 +655,39 @@
     const filterButtons = document.querySelectorAll('.filter-btn');
     const galleryItems = document.querySelectorAll('.gallery-item');
 
-    // Function to handle filtering logic
     function filterGallery(targetFilter) {
-      // Toggle button highlights
       filterButtons.forEach(btn => {
         if(btn.getAttribute('data-filter') === targetFilter) {
-btn.classList.add('active');} else {btn.classList.remove('active');}});// Filter grid image cardsgalleryItems.forEach(item => {const projectType = item.getAttribute('data-project');if (targetFilter === 'all' || projectType === targetFilter) {item.classList.remove('hide');item.classList.add('show');} else {item.classList.remove('show');item.classList.add('hide');}});}// Trigger filter when a filter button is clickedfilterButtons.forEach(button => {button.addEventListener('click', () => {filterGallery(button.getAttribute('data-filter'));});});// Trigger filter when an image card itself is clickedgalleryItems.forEach(item => {item.addEventListener('click', () => {const associatedProject = item.getAttribute('data-project');filterGallery(associatedProject);});});
-  </style>
-</head>
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      galleryItems.forEach(item => {
+        const projectType = item.getAttribute('data-project');
+        if (targetFilter === 'all' || projectType === targetFilter) {
+          item.classList.remove('hide');
+          item.classList.add('show');
+        } else {
+          item.classList.remove('show');
+          item.classList.add('hide');
+        }
+      });
+    }
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        filterGallery(button.getAttribute('data-filter'));
+      });
+    });
+
+    galleryItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const associatedProject = item.getAttribute('data-project');
+        filterGallery(associatedProject);
+      });
+    });
+  </script>
+</body>
+</html>
