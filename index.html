@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Studio Astra Architects</title>
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Studio Astra Architects</title>
+  <style>
     *{
       margin:0;
       padding:0;
@@ -36,7 +36,7 @@
       gap: 15px;
     }
     .nav-brand img {
-      height: 45px; /* Perfect sizing for a header menu logo */
+      height: 45px;
       width: auto;
       border-radius: 4px;
     }
@@ -63,7 +63,7 @@
     header{
       width:100%;
       height:100vh;
-      background-image: url('hero.png'); /* Ensure your high-quality image is named hero.jpg */
+      background-image: url('hero.png');
       background-size:cover;
       background-position:center;
       background-repeat: no-repeat;
@@ -84,7 +84,7 @@
       margin-bottom: 40px;
     }
     
-    /* New Philosophy & Approach Grid */
+    /* Philosophy & Approach Grid */
     .about-details-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -135,25 +135,72 @@
       margin-bottom:15px;
       color:#222;
     }
+
+    /* Interactive Projects Gallery with Overlays */
     .projects{
       background:#f9f9f9;
     }
     .gallery{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-      gap:20px;
+      gap:24px;
       margin-top:40px;
     }
-    .gallery img{
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      height: 320px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      cursor: pointer;
+    }
+    .gallery-item img{
       width:100%;
-      height:300px;
+      height:100%;
       object-fit:cover;
-      border-radius:10px;
-      transition:0.4s;
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     }
-    .gallery img:hover{
-      transform:scale(1.03);
+    .project-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 30px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
     }
+    .project-overlay h3 {
+      color: #fff;
+      font-size: 1.3rem;
+      transform: translateY(20px);
+      transition: transform 0.4s ease;
+      margin-bottom: 5px;
+    }
+    .project-overlay p {
+      color: #d9b98c;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transform: translateY(20px);
+      transition: transform 0.4s ease 0.1s;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+    .gallery-item:hover .project-overlay {
+      opacity: 1;
+    }
+    .gallery-item:hover .project-overlay h3,
+    .gallery-item:hover .project-overlay p {
+      transform: translateY(0);
+    }
+
+    /* Founders Section with Social Icons */
     .founders{
       background:white;
     }
@@ -167,6 +214,8 @@
       background:#f5f3ef;
       padding:40px;
       border-radius:12px;
+      display: flex;
+      flex-direction: column;
     }
     .founder-card h3 {
       margin-bottom: 5px;
@@ -182,7 +231,64 @@
     .founder-card p:not(.founder-title) {
       color: #555;
       line-height: 1.6;
+      margin-bottom: 20px;
     }
+    .founder-socials {
+      margin-top: auto;
+      display: flex;
+      gap: 15px;
+    }
+    .founder-socials a {
+      text-decoration: none;
+      color: #222;
+      font-size: 0.85rem;
+      font-weight: bold;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 2px;
+      transition: 0.3s;
+    }
+    .founder-socials a:hover {
+      color: #d9b98c;
+      border-color: #d9b98c;
+    }
+
+    /* Why Choose Us Section */
+    .why-choose-us {
+      background: #fdfcfb;
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .benefit-card {
+      text-align: left;
+      padding: 20px 10px;
+    }
+    .benefit-icon {
+      width: 50px;
+      height: 50px;
+      background: #f5f3ef;
+      color: #d9b98c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .benefit-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      color: #222;
+    }
+    .benefit-card p {
+      color: #666;
+      line-height: 1.6;
+    }
+
     .contact{
       background:#1d1d1d;
       color:white;
@@ -216,117 +322,187 @@
         grid-template-columns:1fr;
       }
     }
-</style>
+  </style>
 </head>
 <body>
 
-<nav>
-<div class="nav-brand">
-<img src="logo.jpeg" alt="Studio Astra Logo">
-<h2>Studio Astra</h2>
-</div>
-<ul>
-<li><a href="#about">About</a></li>
-<li><a href="#services">Services</a></li>
-<li><a href="#projects">Projects</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul>
-</nav>
-
-<header></header>
-
-<!-- ENHANCED ABOUT SECTION WITH GRID CARDS -->
-<section class="about" id="about">
-<h2 class="section-title">About Us</h2>
-<p>
-  Studio Astra Architects is a premier, full-service architecture and interior design firm based in Bangalore. 
-  Founded by visionary architects Ar. Prajwal Nagaraju and Ar. Manoj HJ, our studio delivers bespoke design solutions that seamlessly bridge the gap between imagination and reality. We offer a comprehensive suite of services including architectural design, luxury interior design, construction management, and flawless turnkey project execution.
-</p>
-
-<div class="about-details-grid">
-  <div class="about-card">
-    <h3>Our Philosophy</h3>
-    <p>We believe that great architecture shapes the human experience. Our core design philosophy harmonizes pure functionality, meticulous craftsmanship, and contemporary aesthetics. We do not just build structures; we curate timeless, enduring environments.</p>
-  </div>
-  <div class="about-card">
-    <h3>Our Approach</h3>
+  <nav>
+    <div class="nav-brand">
+      <img src="logo.jpeg" alt="Studio Astra Logo">
+      <h2>Studio Astra</h2>
+    </div>
     <ul>
-      <li><strong>Client-Centric Vision:</strong> Translating your unique lifestyle into physical spaces.</li>
-      <li><strong>End-to-End Delivery:</strong> Managing everything from initial blueprints to final handover.</li>
-      <li><strong>Uncompromising Quality:</strong> Partnering with skilled craftsmen using premium materials.</li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
-  </div>
-</div>
-</section>
+  </nav>
 
-<section class="services" id="services">
-<h2 class="section-title">Our Services</h2>
-<div class="service-grid">
-<div class="service-card">
-<h3>Architectural Works</h3>
-<p>Contemporary residential and commercial architecture with thoughtful planning.</p>
-</div>
-<div class="service-card">
-<h3>Interior Design</h3>
-<p>Luxury interiors crafted with modern aesthetics and functional detailing.</p>
-</div>
-<div class="service-card">
-<h3>Construction</h3>
-<p>End-to-end construction execution with quality workmanship and supervision.</p>
-</div>
-<div class="service-card">
-<h3>Turnkey Projects</h3>
-<p>Complete design-to-delivery solutions for seamless project execution.</p>
-</div>
-</div>
-</section>
+  <header></header>
 
-<section class="projects" id="projects">
-<h2 class="section-title">Featured Projects</h2>
-<div class="gallery">
-<img src="Image (3).jpg" alt="Featured Architecture 1">
-<img src="Image (4).jpg" alt="Featured Architecture 2">
-<img src="Image (5).jpg" alt="Featured Architecture 3">
-<img src="Image (6).jpg" alt="Featured Architecture 4">
-<img src="Image (7).jpg" alt="Featured Architecture 5">
-<img src="Image (8).jpg" alt="Featured Architecture 6">
-</div>
-</section>
+  <section class="about" id="about">
+    <h2 class="section-title">About Us</h2>
+    <p>
+      Studio Astra Architects is a premier, full-service architecture and interior design firm based in Bangalore. 
+      Founded by visionary architects Ar. Prajwal Nagaraju and Ar. Manoj HJ, our studio delivers bespoke design solutions that seamlessly bridge the gap between imagination and reality. We offer a comprehensive suite of services including architectural design, luxury interior design, construction management, and flawless turnkey project execution.
+    </p>
 
-<!-- ENHANCED FOUNDERS SECTION -->
-<section class="founders">
-<h2 class="section-title">Founders</h2>
-<div class="founder-grid">
-<div class="founder-card">
-<h3>Ar. Prajwal Nagaraju</h3>
-<p class="founder-title">Co-Founder & Principal Architect</p>
-<p>Brings a strategic vision to Studio Astra, aligning architectural precision with modern lifestyle design. He focuses on pushing creative boundaries to turn client concepts into breathtaking realities.</p>
-</div>
-<div class="founder-card">
-<h3>Ar. Manoj HJ</h3>
-<p class="founder-title">Co-Founder & Architect</p>
-<p>Specializes in the execution of complex design structures and high-end interiors. He ensures that structural layout, material selection, and premium craftsmanship harmoniously intersect on every project site.</p>
-</div>
-</div>
-</section>
+    <div class="about-details-grid">
+      <div class="about-card">
+        <h3>Our Philosophy</h3>
+        <p>We believe that great architecture shapes the human experience. Our core design philosophy harmonizes pure functionality, meticulous craftsmanship, and contemporary aesthetics. We do not just build structures; we curate timeless, enduring environments.</p>
+      </div>
+      <div class="about-card">
+        <h3>Our Approach</h3>
+        <ul>
+          <li><strong>Client-Centric Vision:</strong> Translating your unique lifestyle into physical spaces.</li>
+          <li><strong>End-to-End Delivery:</strong> Managing everything from initial blueprints to final handover.</li>
+          <li><strong>Uncompromising Quality:</strong> Partnering with skilled craftsmen using premium materials.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-<section class="contact" id="contact">
-<h2 class="section-title">Get In Touch</h2>
-<p>Studio Astra Architects</p>
-<p>Bagalgunte, Bangalore – 560057</p>
-<p>
+  <section class="services" id="services">
+    <h2 class="section-title">Our Services</h2>
+    <div class="service-grid">
+      <div class="service-card">
+        <h3>Architectural Works</h3>
+        <p>Contemporary residential and commercial architecture with thoughtful planning.</p>
+      </div>
+      <div class="service-card">
+        <h3>Interior Design</h3>
+        <p>Luxury interiors crafted with modern aesthetics and functional detailing.</p>
+      </div>
+      <div class="service-card">
+        <h3>Construction</h3>
+        <p>End-to-end construction execution with quality workmanship and supervision.</p>
+      </div>
+      <div class="service-card">
+        <h3>Turnkey Projects</h3>
+        <p>Complete design-to-delivery solutions for seamless project execution.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="projects" id="projects">
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="gallery">
+      
+      <div class="gallery-item">
+        <img src="Image (3).jpg" alt="Featured Architecture 1">
+        <div class="project-overlay">
+          <h3>Modern Luxury Villa</h3>
+          <p>Architecture &amp; Interiors</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="Image (4).jpg" alt="Featured Architecture 2">
+        <div class="project-overlay">
+          <h3>Minimalist Residence</h3>
+          <p>Residential Concept</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="Image (5).jpg" alt="Featured Architecture 3">
+        <div class="project-overlay">
+          <h3>Contemporary Office</h3>
+          <p>Commercial Design</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="Image (6).jpg" alt="Featured Architecture 4">
+        <div class="project-overlay">
+          <h3>Urban Penthouse</h3>
+          <p>Luxury Interior</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="Image (7).jpg" alt="Featured Architecture 5">
+        <div class="project-overlay">
+          <h3>Bespoke Retail Space</h3>
+          <p>Turnkey Project</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="Image (8).jpg" alt="Featured Architecture 6">
+        <div class="project-overlay">
+          <h3>Eco-Friendly Retreat</h3>
+          <p>Architectural Work</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="founders">
+    <h2 class="section-title">Founders</h2>
+    <div class="founder-grid">
+      <div class="founder-card">
+        <h3>Ar. Prajwal Nagaraju</h3>
+        <p class="founder-title">Co-Founder &amp; Principal Architect</p>
+        <p>Brings a strategic vision to Studio Astra, aligning architectural precision with modern lifestyle design. He focuses on pushing creative boundaries to turn client concepts into breathtaking realities.</p>
+        <div class="founder-socials">
+          <a href="https://instagram.com" target="_blank">Instagram</a>
+          <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+      <div class="founder-card">
+        <h3>Ar. Manoj HJ</h3>
+        <p class="founder-title">Co-Founder &amp; Architect</p>
+        <p>Specializes in the execution of complex design structures and high-end interiors. He ensures that structural layout, material selection, and premium craftsmanship harmoniously intersect on every project site.</p>
+        <div class="founder-socials">
+          <a href="https://instagram.com" target="_blank">Instagram</a>
+          <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="why-choose-us">
+    <h2 class="section-title">Why Choose Studio Astra</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">✓</div>
+        <h3>All Under One Roof</h3>
+        <p>By blending architecture and physical construction, we deliver strict budget control and total design consistency.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">⏱</div>
+        <h3>Strict Timelines</h3>
+        <p>Our turnkey project execution tracking ensures your modern space is handed over completely on schedule.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">✦</div>
+        <h3>Timeless Design</h3>
+        <p>We blend functional custom layout engineering with high-end premium styling to create beautiful, enduring spaces.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2 class="section-title">Get In Touch</h2>
+    <p>Studio Astra Architects</p>
+    <p>Bagalgunte, Bangalore – 560057</p>
+    <p>
       Phone: 
-<a href="tel:9071150712">9071150712</a> / 
-<a href="tel:9148051403">9148051403</a>
-</p>
-<p>
+      <a href="tel:9071150712">9071150712</a> / 
+      <a href="tel:9148051403">9148051403</a>
+    </p>
+    <p>
       Email: 
-<a href="mailto:studioastraarchitects@gmail.com">studioastraarchitects@gmail.com</a>
-</p>
-</section>
+      <a href="mailto:studioastraarchitects@gmail.com">studioastraarchitects@gmail.com</a>
+    </p>
+  </section>
 
-<footer>
+  <footer>
     © 2026 Studio Astra Architects. All Rights Reserved.
-</footer>
+  </footer>
 </body>
 </html>
