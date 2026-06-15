@@ -747,7 +747,41 @@
 
   <!-- GALLERY ISOLATION FILTER SCRIPT ENGINE -->
   <script>
-   // FULL-SCREEN IMAGE GRID LIGHTBOX LOGIC
+    // 1. DYNAMIC CATEGORY BUTTON FILTER LOGIC
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const activeFilter = button.getAttribute('data-filter');
+
+      // Update Active Navigation Button State
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+
+      // Render items based on chosen category grid rules
+      galleryItems.forEach(item => {
+        const itemCategory = item.getAttribute('data-category');
+        
+        // When sorting categories, show only the main structural representative card for that type
+        if (activeFilter === 'all') {
+          // In 'all' view mode, display the main cards, hiding the extra internal 4 photos
+          if (item.querySelector('.project-overlay')) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        } else if (itemCategory === activeFilter) {
+          // If a specific section button is pressed, show all 5 images inside that category grid sequence
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // 2. FULL-SCREEN LIGHTBOX OVERLAY TRACKER LOGIC
 const lightbox = document.getElementById('studioLightbox');
 const lightboxImg = document.getElementById('lightboxImg');
 const lightboxCaption = document.getElementById('lightboxCaption');
