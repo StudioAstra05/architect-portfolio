@@ -81,7 +81,37 @@
       line-height:1.8;
       color:#555;
       font-size:1.05rem;
+      margin-bottom: 40px;
     }
+    
+    /* New Philosophy & Approach Grid */
+    .about-details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 20px;
+    }
+    .about-card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      border-left: 4px solid #d9b98c;
+    }
+    .about-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: #222;
+    }
+    .about-card ul {
+      list-style-type: square;
+      padding-left: 20px;
+      color: #555;
+    }
+    .about-card ul li {
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+
     .services{
       background:#fff;
     }
@@ -138,6 +168,21 @@
       padding:40px;
       border-radius:12px;
     }
+    .founder-card h3 {
+      margin-bottom: 5px;
+    }
+    .founder-title {
+      color: #d9b98c;
+      font-weight: bold;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+    }
+    .founder-card p:not(.founder-title) {
+      color: #555;
+      line-height: 1.6;
+    }
     .contact{
       background:#1d1d1d;
       color:white;
@@ -177,7 +222,6 @@
 
 <nav>
 <div class="nav-brand">
-<!-- Your logo placed right in the header menu -->
 <img src="logo.jpeg" alt="Studio Astra Logo">
 <h2>Studio Astra</h2>
 </div>
@@ -189,18 +233,30 @@
 </ul>
 </nav>
 
-<!-- Clean Header showing only the full-bleed background image -->
 <header></header>
 
+<!-- ENHANCED ABOUT SECTION WITH GRID CARDS -->
 <section class="about" id="about">
 <h2 class="section-title">About Us</h2>
 <p>
-      Studio Astra Architects is a Bangalore-based architecture and interior design studio founded by
-      Ar. Prajwal Nagaraju and Ar. Manoj HJ.
-      We specialize in architectural works, interior design, construction, and turnkey project execution.
-      Our design philosophy combines functionality, craftsmanship, and modern aesthetics to create spaces
-      that are elegant, practical, and timeless.
+  Studio Astra Architects is a premier, full-service architecture and interior design firm based in Bangalore. 
+  Founded by visionary architects Ar. Prajwal Nagaraju and Ar. Manoj HJ, our studio delivers bespoke design solutions that seamlessly bridge the gap between imagination and reality. We offer a comprehensive suite of services including architectural design, luxury interior design, construction management, and flawless turnkey project execution.
 </p>
+
+<div class="about-details-grid">
+  <div class="about-card">
+    <h3>Our Philosophy</h3>
+    <p>We believe that great architecture shapes the human experience. Our core design philosophy harmonizes pure functionality, meticulous craftsmanship, and contemporary aesthetics. We do not just build structures; we curate timeless, enduring environments.</p>
+  </div>
+  <div class="about-card">
+    <h3>Our Approach</h3>
+    <ul>
+      <li><strong>Client-Centric Vision:</strong> Translating your unique lifestyle into physical spaces.</li>
+      <li><strong>End-to-End Delivery:</strong> Managing everything from initial blueprints to final handover.</li>
+      <li><strong>Uncompromising Quality:</strong> Partnering with skilled craftsmen using premium materials.</li>
+    </ul>
+  </div>
+</div>
 </section>
 
 <section class="services" id="services">
@@ -237,16 +293,19 @@
 </div>
 </section>
 
+<!-- ENHANCED FOUNDERS SECTION -->
 <section class="founders">
 <h2 class="section-title">Founders</h2>
 <div class="founder-grid">
 <div class="founder-card">
 <h3>Ar. Prajwal Nagaraju</h3>
-<p>Co-Founder & Principal Architect</p>
+<p class="founder-title">Co-Founder & Principal Architect</p>
+<p>Brings a strategic vision to Studio Astra, aligning architectural precision with modern lifestyle design. He focuses on pushing creative boundaries to turn client concepts into breathtaking realities.</p>
 </div>
 <div class="founder-card">
 <h3>Ar. Manoj HJ</h3>
-<p>Co-Founder & Architect</p>
+<p class="founder-title">Co-Founder & Architect</p>
+<p>Specializes in the execution of complex design structures and high-end interiors. He ensures that structural layout, material selection, and premium craftsmanship harmoniously intersect on every project site.</p>
 </div>
 </div>
 </section>
