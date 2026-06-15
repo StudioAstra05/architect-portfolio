@@ -6,7 +6,7 @@
   <title>Studio Astra Architects</title>
   
   <!-- Font Awesome Vector Asset Icons CDN Link -->
-<link rel="stylesheet" href="https://cloudflare.com" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cloudflare.com" />
 
   
   <style>
@@ -722,61 +722,119 @@
   });
 
   // 2. FULL-SCREEN LIGHTBOX OVERLAY TRACKER LOGIC
-const lightbox = document.getElementById('studioLightbox');
-const lightboxImg = document.getElementById('lightboxImg');
-const lightboxCaption = document.getElementById('lightboxCaption');
-const lightboxCounter = document.getElementById('lightboxCounter');
-const closeBtn = document.querySelector('.lightbox-close');
-const leftArrow = document.querySelector('.arrow-left');
-const rightArrow = document.querySelector('.arrow-right');
 
-let activeGalleryImages = [];
-let currentImgIndex = 0;
+document.addEventListener("DOMContentLoaded", function () {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  
+  const lightbox = document.getElementById('studioLightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+  const lightboxCounter = document.getElementById('lightboxCounter');
+  const closeBtn = document.querySelector('.lightbox-close');
+  const leftArrow = document.querySelector('.arrow-left');
+  const rightArrow = document.querySelector('.arrow-right');
 
-// Connect dynamic click monitoring to every individual image card
-document.querySelectorAll('.gallery-item').forEach(item => {
-  item.addEventListener('click', () => {
-    const selectedCategory = item.getAttribute('data-category');
+  let activeGalleryImages = [];
+  let currentImgIndex = 0;
+
+  // Initialize Default State: Force only the main 6 overlay thumbnails to show on site load
+  galleryItems.forEach(item => {
+    if (item.querySelector('.project-overlay')) {
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+
+  // ====== 1. TEXT FILTER BUTTON NAVIGATION LOGIC ======
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const selectedFilter = button.getAttribute('data-filter');
+
+      // Update Active Navigation Button State
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+
+      // Sort display grids dynamically
+      galleryItems.forEach(item => {
+        const itemCategory = item.getAttribute('data-category');
+
+        if (selectedFilter === 'all') {
+          // Reset to show only primary brand overview cards, keep extra 4 photos hidden
+          if (item.querySelector('.project-overlay')) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        } else if (itemCategory === selectedFilter) {
+          // If a specific section button is pressed, show all 5 images inside that category grid sequence
+          item.style.display = 'block';
+        } else {
+          // Hide all other unrelated categories completely
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // ====== 2. FULL-SCREEN LIGHTBOX OVERLAY TRACKER LOGIC ======
+  galleryItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const selectedCategory = item.getAttribute('data-category');
+      
+      // ALWAYS group all 5 matching images for this design track, ignoring current button states
+      activeGalleryImages = Array.from(document.querySelectorAll(`.gallery-item[data-category="${selectedCategory}"]`));
+      
+      // Index exact location of card index pointer position inside its own sub-group
+      currentImgIndex = activeGalleryImages.indexOf(item);
+      
+      launchLightboxViewer();
+    });
+  });
+
+  function launchLightboxViewer() {
+    if (activeGalleryImages.length === 0) return;
     
-    // Group all 5 images matching this specific design category sequence
-    activeGalleryImages = Array.from(document.querySelectorAll(`.gallery-item[data-category="${selectedCategory}"]`));
+    const currentItem = activeGalleryImages[currentImgIndex];
+    const itemImageSrc = currentItem.querySelector('img').src;
+    const itemCaptionText = currentItem.getAttribute('data-caption') || "Studio Astra Project Asset Portfolio";
     
-    // Find where the user clicked inside this sub-group sequence array
-    currentImgIndex = activeGalleryImages.indexOf(item);
+    // Inject parameters directly into modal layout viewer
+    lightboxImg.src = itemImageSrc;
+    lightboxCaption.textContent = itemCaptionText;
+    lightboxCounter.textContent = `Project Image ${currentImgIndex + 1} of ${activeGalleryImages.length}`;
     
+    lightbox.style.display = 'flex';
+  }
+
+  // Next and Previous Swipe Loop Actions
+  function showNextImage() {
+    currentImgIndex = (currentImgIndex + 1) % activeGalleryImages.length;
     launchLightboxViewer();
+  }
+
+  function showPrevImage() {
+    currentImgIndex = (currentImgIndex - 1 + activeGalleryImages.length) % activeGalleryImages.length;
+    launchLightboxViewer();
+  }
+
+  // Bind interaction event hooks securely
+  rightArrow.addEventListener('click', (e) => { e.stopPropagation(); showNextImage(); });
+  leftArrow.addEventListener('click', (e) => { e.stopPropagation(); showPrevImage(); });
+  closeBtn.addEventListener('click', () => lightbox.style.display = 'none');
+  lightbox.addEventListener('click', () => lightbox.style.display = 'none');
+  lightboxImg.addEventListener('click', (e) => e.stopPropagation());
+
+  // Optional Keyboard Arrow Key Controls for Easing Browsing on Laptops
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.style.display === 'flex') {
+      if (e.key === 'ArrowRight') showNextImage();
+      if (e.key === 'ArrowLeft') showPrevImage();
+      if (e.key === 'Escape') lightbox.style.display = 'none';
+    }
   });
 });
-
-function launchLightboxViewer() {
-  const currentItem = activeGalleryImages[currentImgIndex];
-  const itemImageSrc = currentItem.querySelector('img').src;
-  const itemCaptionText = currentItem.getAttribute('data-caption') || "Studio Astra Project Portfolio";
-  
-  // Feed parameters to interface layout nodes
-  lightboxImg.src = itemImageSrc;
-  lightboxCaption.textContent = itemCaptionText;
-  lightboxCounter.textContent = `Project Image ${currentImgIndex + 1} of ${activeGalleryImages.length}`;
-  
-  lightbox.style.display = 'flex';
-}
-
-// Swipe Controller Handlers
-function showNextImage() {
-  currentImgIndex = (currentImgIndex + 1) % activeGalleryImages.length; // Loops back to 1 seamlessly
-  launchLightboxViewer();
-}
-
-function showPrevImage() {
-  currentImgIndex = (currentImgIndex - 1 + activeGalleryImages.length) % activeGalleryImages.length; // Loops backwards cleanly
-  launchLightboxViewer();
-}
-
-rightArrow.addEventListener('click', (e) => { e.stopPropagation(); showNextImage(); });
-leftArrow.addEventListener('click', (e) => { e.stopPropagation(); showPrevImage(); });
-closeBtn.addEventListener('click', () => lightbox.style.display = 'none');
-lightbox.addEventListener('click', () => lightbox.style.display = 'none');
-lightboxImg.addEventListener('click', (e) => e.stopPropagation()); // Prevents window from shutting when clicking image center
 
   </script>
 </body>
